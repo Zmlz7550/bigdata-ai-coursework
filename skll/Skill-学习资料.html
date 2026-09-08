@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill（AI 技能）概念学习资料</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1f2733; --muted:#5c6675;
+    --line:#e4e8ef; --brand:#2f6bff; --brand-soft:#eaf0ff; --accent:#0f9d6e;
+    --code-bg:#f2f4f8; --warn-bg:#fff6e6; --warn-line:#f2c14e; --warn-ink:#8a5a00;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;font-size:16px}
+  .wrap{max-width:920px;margin:0 auto;padding:32px 20px 80px}
+  header.hero{background:linear-gradient(135deg,#eef4ff,#f4f2ff);border:1px solid var(--line);border-radius:16px;padding:28px 30px;margin-bottom:26px}
+  header.hero h1{margin:0 0 6px;font-size:30px;color:#233;letter-spacing:.5px}
+  .def{font-size:18px;color:var(--ink);background:#fff;border-left:4px solid var(--brand);padding:14px 18px;border-radius:0 8px 8px 0;margin:12px 0 4px}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;font-size:13.5px}
+  .meta span{background:var(--card);border:1px solid var(--line);padding:4px 12px;border-radius:20px;color:var(--muted)}
+  .meta b{color:var(--ink);font-weight:600}
+  nav.toc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 22px;margin-bottom:26px}
+  nav.toc h2{margin:0 0 10px;font-size:15px;color:var(--muted);letter-spacing:1px}
+  nav.toc ol{margin:0;padding-left:22px;font-size:15px}
+  nav.toc a{color:var(--brand);text-decoration:none}
+  nav.toc a:hover{text-decoration:underline}
+  section.block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 28px;margin-bottom:22px}
+  section.block h2{margin:0 0 16px;font-size:21px;border-bottom:2px solid var(--line);padding-bottom:10px}
+  h3{font-size:17px;margin:22px 0 8px;color:#25303f}
+  h4{font-size:15.5px;margin:16px 0 6px}
+  p{margin:8px 0}
+  ul,ol{margin:8px 0;padding-left:24px}
+  li{margin:5px 0}
+  table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14.5px}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+  th{background:var(--brand-soft);font-weight:600;color:#233}
+  tr:nth-child(even) td{background:#fafbfc}
+  code,pre{font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;background:var(--code-bg);border-radius:5px}
+  code{padding:1px 6px;font-size:13.5px}
+  pre{padding:14px 16px;overflow-x:auto;font-size:13px;line-height:1.6}
+  .note{background:var(--warn-bg);border:1px solid var(--warn-line);border-left:4px solid var(--warn-line);color:var(--warn-ink);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:14.5px}
+  .source-table a{color:var(--brand);word-break:break-all}
+  .src-note{font-size:13.5px;color:var(--muted)}
+  .badge{display:inline-block;font-size:12px;padding:1px 8px;border-radius:10px;background:var(--brand-soft);color:var(--brand);margin-right:6px;font-weight:600}
+  .codeblock{background:var(--code-bg);border-radius:8px;padding:14px 16px;margin:12px 0;overflow-x:auto}
+  .codeblock pre{margin:0;padding:0;background:transparent}
+  footer{text-align:center;color:var(--muted);font-size:13px;margin-top:30px}
+  @media(max-width:600px){.wrap{padding:16px 12px 60px}section.block{padding:18px 16px}header.hero{padding:20px 16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>Skill · AI 技能</h1>
+  <div class="def">打包好的"一份给 AI 的专业操作手册"：用一段带元数据说明的指令（常为 SKILL.md），告诉大模型/智能体"当遇到这类任务时，按这套流程和规则来做"，从而把通用模型变成某个细分领域的行家。</div>
+  <div class="meta">
+    <span><b>领域</b>：AI Agent / 模型扩展</span>
+    <span><b>上位概念</b>：Agent 的能力单元（扩展机制之一）</span>
+    <span><b>难度</b>：L2 进阶</span>
+    <span><b>生成日期</b>：2026-09-08</span>
+    <span><b>置信度</b>：中高（部分为平台生态/社区解读）</span>
+  </div>
+</header>
+
+<nav class="toc">
+  <h2>目录</h2>
+  <ol>
+    <li><a href="#s1">个人解释</a></li>
+    <li><a href="#s2">核心机制</a></li>
+    <li><a href="#s3">应用场景</a></li>
+    <li><a href="#s4">边界辨析</a></li>
+    <li><a href="#s5">来源链接</a></li>
+  </ol>
+</nav>
+
+<section class="block" id="s1">
+  <h2>1. 个人解释（用自己的话说）</h2>
+  <h3>大白话版本</h3>
+  <p>大模型什么都懂一点，但不懂你公司的具体规矩。Skill 就是把这些"具体规矩 + 干活步骤"写下来，打包成一个叫 <code>SKILL.md</code> 的文件。以后你只要说一句"按 XX 技能来做"，或模型发现你的需求命中这个技能，它就会照着这份手册一步步执行，产出符合你要求的、可复用的结果。</p>
+  <h3>一个类比</h3>
+  <p>Skill 就像给一位"通用员工"额外挂上的<b>职业资格证/专长包</b>：同样是员工，有人会做表格、有人会报税、有人会剪视频。给 AI 装一个"发邮件 Skill"，它就会发邮件；装一个"销售报表 Skill"，它就能按你们公司的格式精准出报表。</p>
+  <div class="note"><b>类比失效点：</b>真人"持证"靠训练和经验积累；而 Skill 只是"运行时读入的指令文本"，本身不具备模型的参数能力，离开能执行的模型或工具它就只是一堆文字。</div>
+  <h3>30 秒电梯陈述</h3>
+  <p>Skill 是一种"把专家经验固化为可审查、可复用、可按需加载的过程知识"的单元：它通过 <code>SKILL.md</code>（YAML 元数据 + Markdown 指令）声明触发条件与执行流程，配合 scripts / references 等资源，把大模型的<b>通用能力</b>转化为特定场景的<b>标准专业能力</b>，解决"该怎么做、按什么流程做"的问题。</p>
+</section>
+
+<section class="block" id="s2">
+  <h2>2. 核心机制</h2>
+  <h3>关键组成</h3>
+  <ul>
+    <li><b>SKILL.md（必需）</b>：YAML 头（<code>name</code>、<code>description</code>，description 用于触发匹配）+ Markdown 指令正文。</li>
+    <li><b>scripts/（可选）</b>：确定性可执行代码，减少反复手写。</li>
+    <li><b>references/（可选）</b>：按需加载进上下文的技术文档/规范。</li>
+    <li><b>assets 等（可选）</b>：模板、样例、schema 等产出素材。</li>
+  </ul>
+  <h3>运作流程（发现 → 激活 → 执行）</h3>
+  <ol>
+    <li><b>发现（元数据层）</b>：运行时只扫描每个 skill 的 name + description（占用极小，约百余 token）。</li>
+    <li><b>激活</b>：当用户请求与某 skill 的 description 匹配，或用户显式调用（如 <code>/skill-name</code>），才加载该 skill 的完整指令正文。</li>
+    <li><b>执行</b>：模型遵循 skill 的流程与规则完成任务，产出由 skill 作者"塑造"而非模型通用先验的结果。</li>
+  </ol>
+  <p>这一机制叫 <b>Progressive Disclosure（渐进式披露）</b>：层级 1 元数据常驻、层级 2 指令按需载入（<5k token）、层级 3 资源仅在引用时加载——从而装几十上百个 skill 也几乎不占日常 token。</p>
+  <h3>关键判据 / 它与大模型的分工</h3>
+  <div class="note"><b>核心分工：</b>大模型决定"要做什么、理解需求"；Skill 决定"怎么去做、按什么流程做"。大模型是通用智能基础（灵活但不精准），Skill 是专项执行模块（专一、标准、精准、可复用）。</div>
+  <h3>为什么这样设计</h3>
+  <p>因为把整套专业流程每次都写进聊天提示词既冗长又不可复用，团队总是反复"复制粘贴同一套六步操作清单"。Skill 把专家的"一次做法"沉淀为可版本化、可审计、可随模型切换的独立单元，把 expertise 从"prompt-of-the-day"变成可 review 的产物。</p>
+</section>
+
+<section class="block" id="s3">
+  <h2>3. 应用场景</h2>
+  <table>
+    <tr><th>场景</th><th>具体问题</th><th>怎么用</th><th>真实案例 / 出处</th><th>效果与代价</th></tr>
+    <tr><td>团队规范执行</td><td>代码审查、发布流程统一</td><td>把 review 清单写成 skill，PR 时自动触发</td><td>Claude Code skills / 团队 playbook</td><td>可审计、可回滚；需维护</td></tr>
+    <tr><td>行业报表生成</td><td>格式/规则复杂易偏差</td><td>skill 预先定好表头、计算逻辑、排版</td><td>"销售报表.skill" 预定义规则示例</td><td>精准标准、可复用；场景单一</td></tr>
+    <tr><td>给 Agent 装专长</td><td>让 Agent "会查日历/发邮件/做表"</td><td>Agent 背后挂不同技能模块按需调用</td><td>Coze/智能体平台插件技能</td><td>技能越多越全能；调用匹配需准</td></tr>
+    <tr><td>专业模板沉淀</td><td>合同、文档、前端规范</td><td>assets 放模板，skill 约束风格避免"AI 味"</td><td>frontend-design skill（Antropic 生态）</td><td>产出稳定一致；需持续迭代</td></tr>
+  </table>
+  <h3>新手可上手的最小实践</h3>
+  <p>把你总在重复的一段流程（如"生成文章提纲→填充→语法检查→润色"）写成一份最小 <code>SKILL.md</code>：头里写 <code>name</code> 和会触发它的 <code>description</code>，正文用祈使句写清步骤，放进技能目录。下次直接点名调用，验证它是否按你的手册执行。</p>
+</section>
+
+<section class="block" id="s4">
+  <h2>4. 边界辨析</h2>
+  <h3>易混概念对比</h3>
+  <table>
+    <tr><th>维度</th><th>Skill（技能）</th><th>Plugin（插件）</th><th>MCP Server</th><th>Subagent</th></tr>
+    <tr><td>定位</td><td>知识/流程指令</td><td>分发打包单元</td><td>连接外部世界</td><td>独立 AI 实例</td></tr>
+    <tr><td>形态</td><td>Markdown（SKILL.md）</td><td>带元数据的包</td><td>协议化服务器</td><td>YAML 配置</td></tr>
+    <tr><td>做什么</td><td>告诉模型"怎么做"</td><td>打包多个 skill/命令</td><td>提供模型可调的工具/数据</td><td>并行执行隔离任务</td></tr>
+    <tr><td>一句话</td><td>一份菜谱</td><td>一本菜谱集</td><td>连接外界的接口</td><td>另一个专职 AI</td></tr>
+  </table>
+  <h3>常见误解</h3>
+  <ul>
+    <li><b>误解：Skill 就是微调模型或新的模型。</b><div class="note">为什么错：Skill 不是 fine-tune，也没有训练参数。正解：它是"运行时读入的 Markdown 指令契约"，核心是定义流程与规则，不新增模型能力权重。</div></li>
+    <li><b>误解：Skill 就是工具调用 / MCP。</b><div class="note">为什么错：Skill 告诉模型"做什么、按什么流程"；工具调用/MCP 给模型"真正去行动"的副作用能力。正解：常搭配使用——skill 描述流程，流程里调用 MCP/工具落地。</div></li>
+    <li><b>误解：Skill 越多越好、内容能帮模型"记住"。</b><div class="note">为什么错：skill 正文只在激活时才加载，避免占上下文；但也要遵循渐进披露、指令精炼，否则描述含糊会误触发或体量失控。</div></li>
+  </ul>
+  <h3>适用前提</h3>
+  <ul>
+    <li>存在一段<b>可复用、可标准化</b>的流程或规范（同一件事重复发生）。</li>
+    <li>能写清触发条件（description）让模型/用户可靠命中。</li>
+    <li>基础模型具备执行该 skill 指令所需的理解与工具调用能力。</li>
+  </ul>
+  <h3>不适用 / 会失效的情形</h3>
+  <ol>
+    <li><b>纯一次性任务</b>：只为单个场景写 skill 的成本大于收益。</li>
+    <li><b>需要模型"会新的、参数级的技能"</b>（如改语言能力）：只能靠微调，skill 无法替代。</li>
+    <li><b>需要真实副作用</b>（查库、发信、改文件）：单独 skill 不够，需接 MCP/工具，否则"只会想不会做"。</li>
+    <li><b>依赖运行时外部能力不可用时</b>：skill 引用的 scripts/schema 或平台 API 失效，执行即失败。</li>
+  </ol>
+  <h3>在知识树上的位置</h3>
+  <p>Skill 是 <b>Agent 的能力单元</b>，与 Plugin（打包层）、MCP/工具调用（连接层）、Subagent（执行实例）同属"扩展 AI 的能力"这一族。它与 Tool/MCP 是"能力层 vs 连接层"的关系：Skill 定义做什么/怎么做，Agent 决定何时做/为何做。</p>
+</section>
+
+<section class="block" id="s5">
+  <h2>5. 来源链接</h2>
+  <table class="source-table">
+    <tr><th>#</th><th>标题</th><th>类型</th><th>作者/机构</th><th>年份</th><th>链接</th><th>可信度</th><th>用于</th></tr>
+    <tr><td>1</td><td>深度解析：网上都在说的"某某.skill"到底是什么</td><td>科普媒体</td><td>科普中国资源服务</td><td>2025</td><td><a href="https://cloud.kepuchina.cn/newSearch/imgText?id=7443413492242653184">kepuchina.cn</a></td><td>中</td><td>Skill 定义/与大模型分工/智能体角色</td></tr>
+    <tr><td>2</td><td>What are Claude Skills?（Skill vs Plugin vs MCP）</td><td>技术博客</td><td>ElasticFlow</td><td>2025</td><td><a href="https://elasticflow.app/hub/what-are-claude-skills">elasticflow.app</a></td><td>中</td><td>定义/历史/三者关系/渐进披露</td></tr>
+    <tr><td>3</td><td>Skills vs MCP vs Plugins vs Subagents: A Complete Guide</td><td>技术博客</td><td>Awesome Skills</td><td>2025</td><td><a href="https://awesomeskill.ai/blog/skills-vs-mcp-vs-plugins-vs-subagents">awesomeskill.ai</a></td><td>中</td><td>四类扩展机制对比/触发流程</td></tr>
+    <tr><td>4</td><td>What Are Claude Code Skills? A Beginner Guide</td><td>技术博客</td><td>Developers Digest</td><td>2025</td><td><a href="https://www.developersdigest.tech/blog/what-are-claude-code-skills-beginner-guide">developersdigest.tech</a></td><td>中</td><td>Agent Skills 开放标准/渐进披露/SKILL.md schema</td></tr>
+    <tr><td>5</td><td>Skill System（Anthropic/claude-code）</td><td>代码文档分析</td><td>DeepWiki</td><td>2025</td><td><a href="https://deepwiki.com/anthropics/claude-code/3.7-skill-system">deepwiki.com</a></td><td>中</td><td>SKILL.md 文件格式/目录结构/加载策略</td></tr>
+    <tr><td>6</td><td>Agent/Skill 黑话科普（含 Skill 白话与比喻）</td><td>科普资料</td><td>腾讯 ima 知识库（AI 时代黑话系列）</td><td>2025</td><td><a href="https://ima.qq.com/wiki/?shareId=dfc44fc54bade2d80e770893492e6b437c0d182244b5cec8474a964eb1c55e91">ima.qq.com</a></td><td>低</td><td>一句话白话/专长包类比/小白用法</td></tr>
+  </table>
+  <h3>存疑与未证实</h3>
+  <ul class="src-note">
+    <li>"Skill 首见于 Anthropic 2025 年 10 月随 Claude Code 推出"等时间线来自第三方博客转述，建议以官方文档为准。</li>
+    <li>Skill 与 MCP/Plugin 的边界在不同平台（Anthropic、OpenAI、各家 Agent 平台）定义略有差异，本资料按主流"能力层/连接层/打包层"框架归纳。</li>
+  </ul>
+  <h3>延伸阅读路径</h3>
+  <ul>
+    <li><b>入门</b>：科普中国《某某.skill 到底是什么》+ 腾讯 ima 黑话科普（白话与比喻）。</li>
+    <li><b>进阶</b>：Developers Digest《Claude Code Skills 指南》（Agent Skills 开放标准 + schema）；Awesome Skills 对比表。</li>
+    <li><b>原始文档</b>：Anthropic Claude Code Skills / Agent Skills 官方文档（docs.anthropic.com）；agentskills.io 开放标准；官方技能仓库 github.com/anthropics/skills。</li>
+  </ul>
+</section>
+
+<footer>由 concept-tutor Skill 生成 · 联网查证 · 五大模块结构 · 生成于 2026-09-08</footer>
+</div>
+</body>
+</html>

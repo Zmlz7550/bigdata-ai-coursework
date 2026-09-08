@@ -1,0 +1,172 @@
+# =========================================================================
+# zzzzz · AI 概念学习资料仓库 —— .gitignore
+#
+# 用途：防止 API Key、密码、令牌、证书等敏感信息，以及临时/本地文件
+#      被意外提交进 Git 仓库。
+#
+# 使用说明：
+#   - 本文件放在仓库根目录生效。
+#   - 若个别文件此前已被 git 跟踪，需先解除跟踪再忽略：
+#       git rm -r --cached <file-or-dir>   （可配合下方规则使用）
+#   - 敏感文件请务必先备份到仓库外（如密码管理器），再删除本地副本。
+#
+# 核查状态：本文件已人工核查（仓库维护者，2026-09-08）。
+# =========================================================================
+
+# ---------------------------------------------------------------------------
+# 一、敏感信息 / 凭据（重点区）—— 任何含密钥、口令、令牌的内容都不应入库
+# ---------------------------------------------------------------------------
+
+# 通用环境变量与密钥文件
+.env
+.env.*
+!.env.example
+!.env.template
+*.env.local
+*.env.production
+*.env.development
+
+# 显式的密钥 / 口令文本文件（常见命名，按需扩展）
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.cer
+*.der
+*.pub
+*.keystore
+*.jks
+secrets.*
+secret.*
+credentials.*
+credential.*
+id_rsa
+id_dsa
+id_ecdsa
+id_ed25519
+*.ppk
+*.jwt
+*.token
+*.api_key
+*.apikey
+*apikey*
+*api_key*
+apikey.txt
+api_key.txt
+token.txt
+token_key.txt
+password.txt
+passwords.txt
+*.password
+private_key.pem
+
+# 各家云厂商 / 服务商凭据与配置文件
+.aws/
+aws_credentials
+~/.aws/credentials
+.gcp/
+gcloud-service-key.json
+.azure/
+.ssh/
+.ssh/*
+!.ssh/README.md
+.well-known/acme-challenge/
+
+# 常见应用 / 框架的密钥配置文件
+*.secret.yaml
+*.secret.yml
+*.secret.json
+config.private.json
+config.local.json
+application-secret.yml
+application-secret.properties
+
+# 若本目录出现"存放密钥快照/导出的临时子目录"，一律忽略（请按需取消注释）
+# keys/
+# credentials/
+# backup_keys/
+
+# ---------------------------------------------------------------------------
+# 二、本仓库特有的敏感/临时产出（避免误入库）
+# ---------------------------------------------------------------------------
+
+# 若后续在 .zzzzz 或 skll 下放置脚本/密钥导出，用以下规则兜底
+.zzzzz/.keys/
+.zzzzz/.env
+skll/.env
+*.secret.html
+*_keys.html
+
+# ---------------------------------------------------------------------------
+# 三、日志 / 缓存 / 临时文件
+# ---------------------------------------------------------------------------
+*.log
+*.pid
+*.seed
+*.gz
+*.zip
+*.7z
+*.rar
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.DS_Store
+Thumbs.db
+Desktop.ini
+*~
+*.swp
+*.swo
+*.tmp
+*.temp
+.cache/
+.tmp/
+tmp/
+
+# ---------------------------------------------------------------------------
+# 四、语言 / 构建产物（本仓库以 md/html 为主，以下为通用兜底）
+# ---------------------------------------------------------------------------
+# Node / 前端
+node_modules/
+dist/
+build/
+out/
+.next/
+.nuxt/
+coverage/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# 编辑器 / IDE 个人配置（保留团队级配置）
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.project
+.classpath
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# 操作系统隐藏垃圾文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+*.lnk
